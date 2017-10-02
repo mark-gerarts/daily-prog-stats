@@ -26,10 +26,9 @@ def parse_csv(file):
 def parse_row(row):
     comment_id, body, user, created, parent_id, parent_title = row
     c = conn.cursor()
-    comment_id = 'bleh'
     c.execute('SELECT id FROM submissions WHERE id = ?', (comment_id,))
-    print(c.fetchone())
-#    c.execute(
-    #     'INSERT INTO submissions VALUES (?,?,?,?,?,?)',
-    #     (comment_id, body, user, parent_id, parent_title, created)
-    # )
+    if not c.fetchone():
+        c.execute(
+            'INSERT INTO submissions VALUES (?,?,?,?,?,?)',
+            (comment_id, body, user, parent_id, parent_title, created)
+        )

@@ -11,7 +11,8 @@ def create_tables():
                   user text,
                   parent_id text,
                   parent_title text,
-                  created timestamp)''')
+                  created timestamp,
+                  language text)''')
     conn.commit()
 
 def parse_csv(file):
@@ -32,3 +33,8 @@ def parse_row(row):
             'INSERT INTO submissions VALUES (?,?,?,?,?,?)',
             (comment_id, body, user, parent_id, parent_title, created)
         )
+
+def iterate_over_csvs_in_dir(directory):
+    for filename in os.listdir(directory):
+        if filename.endswith('.csv'):
+            parse_csv(filename)
